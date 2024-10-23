@@ -57,7 +57,7 @@ app.post('/send-emails', upload.array('attachments'), async (req, res) => {
 
             // Log the sending status
             const logMessage = `Email sent to: ${recipient} at ${new Date().toISOString()}\n`;
-            // fs.appendFileSync('email_log.txt', logMessage);
+            fs.appendFileSync('email_log.txt', logMessage);
             console.log(logMessage);
 
             // Send update to all connected clients
@@ -70,6 +70,7 @@ app.post('/send-emails', upload.array('attachments'), async (req, res) => {
 
         res.status(200).json({ message: `Emails sent successfully! ${sentCount} out of ${totalRecipients} emails sent.` });
     } catch (error) {
+        console.log(error);
         res.status(500).json({ message: 'Failed to send emails: ' + error.message });
     }
 });
